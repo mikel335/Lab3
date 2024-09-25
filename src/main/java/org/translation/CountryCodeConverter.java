@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * This class provides the service of converting country codes to their names.
@@ -12,6 +13,9 @@ import java.util.List;
 public class CountryCodeConverter {
 
     // TODO Task: pick appropriate instance variable(s) to store the data necessary for this class
+
+    private final List<String> countryCode = new ArrayList<>();
+    private final List<String> countryNames = new ArrayList<>();
 
     /**
      * Default constructor which will load the country codes from "country-codes.txt"
@@ -34,6 +38,13 @@ public class CountryCodeConverter {
 
             // TODO Task: use lines to populate the instance variable(s)
 
+            lines.remove(0);
+
+            for (String line : lines) {
+                List<String> splitLine = List.of(line.split("\t"));
+                this.countryNames.add(splitLine.get(0));
+                this.countryCode.add(splitLine.get(2));
+            }
         }
         catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -48,7 +59,10 @@ public class CountryCodeConverter {
      */
     public String fromCountryCode(String code) {
         // TODO Task: update this code to use an instance variable to return the correct value
-        return code;
+        final String capitalizedCode = code.toUpperCase();
+        final int index = this.countryCode.indexOf(capitalizedCode);
+
+        return this.countryNames.get(index);
     }
 
     /**
@@ -58,7 +72,9 @@ public class CountryCodeConverter {
      */
     public String fromCountry(String country) {
         // TODO Task: update this code to use an instance variable to return the correct value
-        return country;
+        final int index = this.countryNames.indexOf(country);
+
+        return this.countryCode.get(index);
     }
 
     /**
@@ -67,6 +83,11 @@ public class CountryCodeConverter {
      */
     public int getNumCountries() {
         // TODO Task: update this code to use an instance variable to return the correct value
-        return 0;
+        if (this.countryNames.isEmpty()) {
+            return 0;
+        }
+        else {
+            return this.countryNames.size();
+        }
     }
 }
