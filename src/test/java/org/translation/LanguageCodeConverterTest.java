@@ -10,6 +10,7 @@ public class LanguageCodeConverterTest {
     public void fromLanguageCodeEN() {
         LanguageCodeConverter converter = new LanguageCodeConverter();
         assertEquals("English", converter.fromLanguageCode("en"));
+        assertEquals("en", converter.fromLanguage("English"));
     }
 
     @Test

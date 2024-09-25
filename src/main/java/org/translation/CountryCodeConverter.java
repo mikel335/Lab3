@@ -43,7 +43,7 @@ public class CountryCodeConverter {
             for (String line : lines) {
                 List<String> splitLine = List.of(line.split("\t"));
                 this.countryNames.add(splitLine.get(0));
-                this.countryCode.add(splitLine.get(2));
+                this.countryCode.add(splitLine.get(2).toLowerCase());
             }
         }
         catch (IOException | URISyntaxException ex) {
@@ -59,8 +59,7 @@ public class CountryCodeConverter {
      */
     public String fromCountryCode(String code) {
         // TODO Task: update this code to use an instance variable to return the correct value
-        final String capitalizedCode = code.toUpperCase();
-        final int index = this.countryCode.indexOf(capitalizedCode);
+        final int index = this.countryCode.indexOf(code);
 
         return this.countryNames.get(index);
     }
